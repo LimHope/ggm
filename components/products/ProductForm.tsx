@@ -29,11 +29,6 @@ export default function ProductForm() {
     e.preventDefault()
     setError('')
 
-    if (images.length === 0) {
-      setError('최소 1장의 이미지를 업로드해주세요.')
-      return
-    }
-
     // Validate price
     const price = parseInt(String(formData.price), 10)
     if (isNaN(price) || price < 0) {
@@ -94,7 +89,7 @@ export default function ProductForm() {
       {/* Image Upload */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          상품 이미지
+          상품 이미지 <span className="text-gray-500 font-normal">(선택사항)</span>
         </label>
         <ImageUpload
           previews={previews}

@@ -70,8 +70,11 @@ export default function ProductDetail({ product }: ProductDetailProps) {
                 ))}
               </Swiper>
             ) : (
-              <div className="aspect-square bg-gray-100 flex items-center justify-center">
-                <p className="text-gray-400">이미지 없음</p>
+              <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                <div className="text-center">
+                  <div className="text-8xl mb-4">📦</div>
+                  <p className="text-lg text-gray-500 font-medium">등록된 이미지가 없습니다</p>
+                </div>
               </div>
             )}
           </Card>

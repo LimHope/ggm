@@ -11,19 +11,28 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const firstImage = product.product_images?.[0]
-  const imageUrl = firstImage ? getImageUrl(firstImage.image_url) : '/placeholder.svg'
+  const hasImage = firstImage && firstImage.image_url
 
   return (
     <Link href={`/products/${product.id}`}>
       <Card className="overflow-hidden hover:shadow-md transition-shadow cursor-pointer">
         <div className="aspect-square relative bg-gray-100">
-          <Image
-            src={imageUrl}
-            alt={product.title}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
+          {hasImage ? (
+            <Image
+              src={getImageUrl(firstImage.image_url)}
+              alt={product.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+              <div className="text-center">
+                <div className="text-6xl mb-2">📦</div>
+                <p className="text-sm text-gray-400">이미지 없음</p>
+              </div>
+            </div>
+          )}
           {product.status !== 'available' && (
             <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
               <span className="bg-white px-4 py-2 rounded-full font-semibold text-gray-900">
