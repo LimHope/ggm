@@ -41,6 +41,16 @@ export default function ProductForm() {
       return
     }
 
+    if (price === 0) {
+      setError('가격을 입력해주세요.')
+      return
+    }
+
+    if (price > 1000000000) {
+      setError('가격은 10억원을 초과할 수 없습니다.')
+      return
+    }
+
     setLoading(true)
 
     try {
@@ -131,27 +141,33 @@ export default function ProductForm() {
       {/* Price */}
       <div>
         <label htmlFor="price" className="block text-sm font-medium text-gray-700 mb-1">
-          가격
+          가격 (원)
         </label>
         <input
           id="price"
           name="price"
           type="text"
           inputMode="numeric"
-          pattern="[0-9]*"
-          value={formData.price === 0 ? '' : formData.price}
+          value={formData.price === 0 ? '' : formData.price.toLocaleString('ko-KR')}
           onChange={(e) => {
             const value = e.target.value.replace(/[^0-9]/g, '')
-            setFormData(prev => ({
-              ...prev,
-              price: value ? parseInt(value, 10) : 0
-            }))
+            const numValue = value ? parseInt(value, 10) : 0
+
+            // 최대 10억원 제한
+            if (numValue <= 1000000000) {
+              setFormData(prev => ({
+                ...prev,
+                price: numValue
+              }))
+            }
           }}
           required
-          placeholder="0"
+          placeholder="예: 50,000"
           className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent"
         />
-        <p className="mt-1 text-sm text-gray-500">숫자만 입력해주세요</p>
+        <p className="mt-1 text-sm text-gray-500">
+          최대 10억원까지 입력 가능 {formData.price > 0 && `(${formData.price.toLocaleString('ko-KR')}원)`}
+        </p>
       </div>
 
       {/* Location */}
