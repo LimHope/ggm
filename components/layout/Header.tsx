@@ -1,12 +1,27 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
+import { useRouter, usePathname } from 'next/navigation'
 import { User, Search, Menu } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import { useAuth } from '@/hooks/useAuth'
 
 export default function Header() {
   const { user, profile } = useAuth()
+  const router = useRouter()
+  const pathname = usePathname()
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      router.push(`/?search=${encodeURIComponent(searchQuery.trim())}`)
+    } else if (pathname === '/') {
+      // If empty search on home page, just reload to show all
+      router.push('/')
+    }
+  }
 
   return (
     <header className="bg-primary-700 text-white shadow-md sticky top-0 z-50">
@@ -22,14 +37,16 @@ export default function Header() {
 
           {/* Search Bar - Hidden on mobile */}
           <div className="hidden md:flex flex-1 max-w-xl mx-8">
-            <div className="relative w-full">
+            <form onSubmit={handleSearch} className="relative w-full">
               <input
                 type="text"
                 placeholder="상품을 검색해보세요"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full px-4 py-2 pl-10 bg-primary-600 text-white placeholder-primary-200 rounded-md focus:outline-none focus:ring-2 focus:ring-white"
               />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-primary-200" />
-            </div>
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-primary-200 cursor-pointer" onClick={handleSearch} />
+            </form>
           </div>
 
           {/* Right Menu */}
@@ -71,14 +88,16 @@ export default function Header() {
 
         {/* Mobile Search */}
         <div className="md:hidden pb-3">
-          <div className="relative">
+          <form onSubmit={handleSearch} className="relative">
             <input
               type="text"
               placeholder="상품을 검색해보세요"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full px-4 py-2 pl-10 bg-primary-600 text-white placeholder-primary-200 rounded-md focus:outline-none focus:ring-2 focus:ring-white"
             />
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-primary-200" />
-          </div>
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-primary-200 cursor-pointer" onClick={handleSearch} />
+          </form>
         </div>
       </div>
     </header>
