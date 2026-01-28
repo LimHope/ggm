@@ -34,10 +34,22 @@ export default function ProductForm() {
       return
     }
 
+    // Validate price
+    const price = parseInt(String(formData.price), 10)
+    if (isNaN(price) || price < 0) {
+      setError('올바른 가격을 입력해주세요.')
+      return
+    }
+
     setLoading(true)
 
     try {
-      const result = await createProduct(formData, images)
+      const validatedFormData = {
+        ...formData,
+        price: price, // Ensure price is a proper integer
+      }
+
+      const result = await createProduct(validatedFormData, images)
 
       if (result.success && result.productId) {
         router.push(`/products/${result.productId}`)
@@ -57,7 +69,7 @@ export default function ProductForm() {
     const { name, value } = e.target
     setFormData(prev => ({
       ...prev,
-      [name]: name === 'price' ? parseInt(value) || 0 : value,
+      [name]: value,
     }))
   }
 
@@ -117,16 +129,30 @@ export default function ProductForm() {
       </div>
 
       {/* Price */}
-      <Input
-        label="가격"
-        name="price"
-        type="number"
-        value={formData.price}
-        onChange={handleChange}
-        required
-        placeholder="0"
-        min={0}
-      />
+      <div>
+        <label htmlFor="price" className="block text-sm font-medium text-gray-700 mb-1">
+          가격
+        </label>
+        <input
+          id="price"
+          name="price"
+          type="text"
+          inputMode="numeric"
+          pattern="[0-9]*"
+          value={formData.price === 0 ? '' : formData.price}
+          onChange={(e) => {
+            const value = e.target.value.replace(/[^0-9]/g, '')
+            setFormData(prev => ({
+              ...prev,
+              price: value ? parseInt(value, 10) : 0
+            }))
+          }}
+          required
+          placeholder="0"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-transparent"
+        />
+        <p className="mt-1 text-sm text-gray-500">숫자만 입력해주세요</p>
+      </div>
 
       {/* Location */}
       <Input

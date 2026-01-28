@@ -87,6 +87,9 @@ export async function createProduct(
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) throw new Error('로그인이 필요합니다.')
 
+    console.log('Creating product for user:', user.id)
+    console.log('Form data:', formData)
+
     // Create product
     const { data: product, error: productError } = await supabase
       .from('products')
@@ -97,7 +100,12 @@ export async function createProduct(
       .select()
       .single()
 
-    if (productError) throw productError
+    if (productError) {
+      console.error('Product creation error:', productError)
+      throw new Error(productError.message || 'Failed to create product')
+    }
+
+    console.log('Product created:', product)
 
     // Upload images
     if (imageFiles.length > 0) {
@@ -105,19 +113,29 @@ export async function createProduct(
         const fileExt = file.name.split('.').pop()
         const fileName = `${user.id}/${product.id}/${Date.now()}-${index}.${fileExt}`
 
+        console.log('Uploading image:', fileName)
+
         const { error: uploadError, data } = await supabase.storage
           .from('product-images')
           .upload(fileName, file)
 
-        if (uploadError) throw uploadError
+        if (uploadError) {
+          console.error('Image upload error:', uploadError)
+          throw new Error(uploadError.message || 'Failed to upload image')
+        }
 
         // Save image URL to database
         const imageUrl = `product-images/${fileName}`
-        return supabase.from('product_images').insert({
+        const { error: imageDbError } = await supabase.from('product_images').insert({
           product_id: product.id,
           image_url: imageUrl,
           display_order: index,
         })
+
+        if (imageDbError) {
+          console.error('Image DB error:', imageDbError)
+          throw new Error(imageDbError.message || 'Failed to save image info')
+        }
       })
 
       await Promise.all(imagePromises)
@@ -126,7 +144,7 @@ export async function createProduct(
     return { success: true, productId: product.id }
   } catch (error: any) {
     console.error('Error creating product:', error)
-    return { success: false, error: error.message }
+    return { success: false, error: error.message || '상품 등록에 실패했습니다.' }
   }
 }
 

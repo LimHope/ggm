@@ -37,9 +37,9 @@ export default function Header() {
             {user ? (
               <>
                 <Link href="/products/new">
-                  <Button variant="primary" size="sm" className="bg-white text-primary-700 hover:bg-gray-100">
+                  <button className="px-4 py-2 bg-white text-primary-700 hover:bg-gray-100 rounded-md font-medium transition-colors text-sm">
                     판매하기
-                  </Button>
+                  </button>
                 </Link>
                 <Link href="/profile" className="flex items-center space-x-2 hover:opacity-80">
                   {profile?.avatar_url ? (
@@ -58,9 +58,9 @@ export default function Header() {
               </>
             ) : (
               <Link href="/login">
-                <Button variant="primary" size="sm" className="bg-white text-primary-700 hover:bg-gray-100">
+                <button className="px-4 py-2 bg-white text-primary-700 hover:bg-gray-100 rounded-md font-medium transition-colors text-sm">
                   로그인
-                </Button>
+                </button>
               </Link>
             )}
             <button className="md:hidden">
