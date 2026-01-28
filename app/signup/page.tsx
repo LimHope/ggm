@@ -10,8 +10,8 @@ export default function SignUpPage() {
           <div className="inline-block w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center text-4xl mb-4">
             🍠
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">회원가입</h1>
-          <p className="text-gray-600 mt-2">고구마마켓과 함께 시작하세요</p>
+          <h1 className="text-3xl font-jua text-gray-900">회원가입</h1>
+          <p className="text-gray-600 mt-2 font-jua text-lg">Go구마마켓과 함께 시작하세요</p>
         </div>
 
         <SignUpForm />

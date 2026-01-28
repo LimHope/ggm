@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Jua } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -14,8 +14,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const jua = Jua({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-jua",
+});
+
 export const metadata: Metadata = {
-  title: "고구마마켓 - 우리 동네 중고 거래",
+  title: "Go구마마켓 - 우리 동네 중고 거래",
   description: "우리 동네 중고 거래의 새로운 시작",
 };
 
@@ -27,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} ${jua.variable} antialiased flex flex-col min-h-screen`}
       >
         <Header />
         <main className="flex-1 bg-gray-50">

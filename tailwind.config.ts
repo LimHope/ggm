@@ -23,6 +23,9 @@ const config: Config = {
           950: "#052e16",
         },
       },
+      fontFamily: {
+        jua: ['var(--font-jua)', 'sans-serif'],
+      },
     },
   },
   plugins: [],

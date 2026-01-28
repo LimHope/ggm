@@ -10,8 +10,8 @@ export default function LoginPage() {
           <div className="inline-block w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center text-4xl mb-4">
             🍠
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">로그인</h1>
-          <p className="text-gray-600 mt-2">고구마마켓에 오신 것을 환영합니다</p>
+          <h1 className="text-3xl font-jua text-gray-900">로그인</h1>
+          <p className="text-gray-600 mt-2 font-jua text-lg">Go구마마켓에 오신 것을 환영합니다</p>
         </div>
 
         <LoginForm />

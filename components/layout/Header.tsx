@@ -31,7 +31,7 @@ export default function Header() {
             <div className="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center text-2xl">
               🍠
             </div>
-            <span className="text-xl font-bold">고구마마켓</span>
+            <span className="text-2xl font-jua tracking-wide">Go구마마켓</span>
           </Link>
 
           {/* Search Bar - Hidden on mobile */}

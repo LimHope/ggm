@@ -40,7 +40,7 @@ function HomeContent() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">중고거래</h1>
+        <h1 className="text-3xl font-jua text-gray-900">중고거래</h1>
         <p className="text-gray-600 mt-1">우리 동네의 따뜻한 거래</p>
       </div>
 

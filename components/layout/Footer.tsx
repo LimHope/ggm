@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-lg font-bold text-gray-900 mb-3">고구마마켓</h3>
+            <h3 className="text-xl font-jua text-gray-900 mb-3">Go구마마켓</h3>
             <p className="text-sm text-gray-600">
               우리 동네 중고 거래의 새로운 시작
             </p>
@@ -27,7 +27,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-gray-200 text-center text-sm text-gray-500">
-          © 2024 고구마마켓. All rights reserved.
+          © 2024 <span className="font-jua">Go구마마켓</span>. All rights reserved.
         </div>
       </div>
     </footer>
