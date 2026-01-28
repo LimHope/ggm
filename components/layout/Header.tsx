@@ -4,7 +4,6 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { User, Search, Menu } from 'lucide-react'
-import Button from '@/components/ui/Button'
 import { useAuth } from '@/hooks/useAuth'
 
 export default function Header() {

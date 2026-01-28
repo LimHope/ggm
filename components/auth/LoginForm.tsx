@@ -30,8 +30,8 @@ export default function LoginForm() {
 
       router.push('/')
       router.refresh()
-    } catch (err: any) {
-      setError(err.message || '로그인에 실패했습니다.')
+    } catch (err) {
+      setError((err as Error).message || '로그인에 실패했습니다.')
     } finally {
       setLoading(false)
     }

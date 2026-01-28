@@ -1,12 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useProducts } from '@/hooks/useProducts'
 import ProductGrid from '@/components/products/ProductGrid'
 import { CATEGORIES } from '@/lib/constants'
 
-export default function Home() {
+function HomeContent() {
   const { products, loading } = useProducts()
   const [selectedCategory, setSelectedCategory] = useState<string>('전체')
   const searchParams = useSearchParams()
@@ -48,7 +48,7 @@ export default function Home() {
       {searchQuery && (
         <div className="mb-4 p-4 bg-primary-50 border border-primary-200 rounded-lg">
           <p className="text-primary-800">
-            <span className="font-semibold">"{searchQuery}"</span> 검색 결과: {searchFilteredProducts.length}개
+            <span className="font-semibold">&ldquo;{searchQuery}&rdquo;</span> 검색 결과: {searchFilteredProducts.length}개
           </p>
         </div>
       )}
@@ -109,5 +109,19 @@ export default function Home() {
         </>
       )}
     </div>
+  )
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex justify-center items-center min-h-[60vh]">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+        </div>
+      </div>
+    }>
+      <HomeContent />
+    </Suspense>
   )
 }

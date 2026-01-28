@@ -48,8 +48,8 @@ export default function SignUpForm() {
       if (signUpError) throw signUpError
 
       router.push('/login')
-    } catch (err: any) {
-      setError(err.message || '회원가입에 실패했습니다.')
+    } catch (err) {
+      setError((err as Error).message || '회원가입에 실패했습니다.')
     } finally {
       setLoading(false)
     }
