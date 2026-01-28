@@ -13,14 +13,13 @@ export function useProducts() {
     try {
       const { data, error } = await supabase
         .from('products')
-        .select(`
-          *,
-          product_images(*),
-          profiles(*)
-        `)
+        .select('*, product_images(*), profiles(*)')
         .order('created_at', { ascending: false })
 
-      if (error) throw error
+      if (error) {
+        console.error('Supabase error:', error)
+        throw error
+      }
       setProducts(data as ProductWithImages[])
     } catch (error) {
       console.error('Error fetching products:', error)
@@ -46,15 +45,14 @@ export function useProduct(id: string) {
       try {
         const { data, error } = await supabase
           .from('products')
-          .select(`
-            *,
-            product_images(*),
-            profiles(*)
-          `)
+          .select('*, product_images(*), profiles(*)')
           .eq('id', id)
           .single()
 
-        if (error) throw error
+        if (error) {
+          console.error('Supabase error:', error)
+          throw error
+        }
 
         // Increment view count
         await supabase
